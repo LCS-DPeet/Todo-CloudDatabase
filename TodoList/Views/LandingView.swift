@@ -19,7 +19,7 @@ struct LandingView: View {
     
     // The view model
     @State var viewModel = TodoListViewModel()
-
+    
     
     // MARK: Computed properties
     var body: some View {
@@ -28,9 +28,9 @@ struct LandingView: View {
             VStack {
                 
                 List($viewModel.todos) { $todo in
-
+                    
                     ItemView(currentItem: $todo)
-                        // Delete item
+                    // Delete item
                         .swipeActions {
                             Button(
                                 "Delete",
