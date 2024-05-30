@@ -27,22 +27,38 @@ struct LandingView: View {
             
             VStack {
                 
-                List($viewModel.todos) { $todo in
+                if viewModel.todos.isEmpty {
                     
-                    ItemView(currentItem: $todo)
-                    // Delete item
-                        .swipeActions {
-                            Button(
-                                "Delete",
-                                role: .destructive,
-                                action: {
-                                    viewModel.delete(todo)
-                                }
-                            )
-                        }
+                    // show the prompt to add a new to-do item.
+                    
+                    ContentUnavailableView(
+                        "No to-do items",
+                        systemImage: "pencil.tip.crop.circle.badge.plus",
+                        description: Text("Add a reminder to get started")
+                    )
+                    
+                } else {
+                   
+                    //show the list of items  
+                    List($viewModel.todos) { $todo in
+                        
+                        ItemView(currentItem: $todo)
+                        // Delete item
+                            .swipeActions {
+                                Button(
+                                    "Delete",
+                                    role: .destructive,
+                                    action: {
+                                        viewModel.delete(todo)
+                                    }
+                                )
+                            }
+                        
+                    }
                     
                 }
-                .searchable(text: $searchText)
+                
+              
                 
             }
             .navigationTitle("To do")
@@ -65,7 +81,7 @@ struct LandingView: View {
                     }
                 }
             }
-            
+            // Handle searching in the list
         }
         .environment(viewModel)
     }
