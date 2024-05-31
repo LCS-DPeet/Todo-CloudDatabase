@@ -29,17 +29,27 @@ struct LandingView: View {
                 
                 if viewModel.todos.isEmpty {
                     
-                    // show the prompt to add a new to-do item.
-                    
-                    ContentUnavailableView(
-                        "No to-do items",
-                        systemImage: "pencil.tip.crop.circle.badge.plus",
-                        description: Text("Add a reminder to get started")
-                    )
+                    if viewModel.fetchingTodos {
+                        
+                        Spacer()
+                        
+                        ProgressView()
+                        
+                        Spacer()
+                        
+                    } else {
+                        
+                        ContentUnavailableView(
+                            "No to-do items",
+                            systemImage: "pencil.tip.crop.circle.badge.plus",
+                            description: Text("Add a reminder to get started")
+                        )
+                        
+                    }
                     
                 } else {
-                   
-                    //show the list of items  
+                    
+                    //show the list of items
                     List($viewModel.todos) { $todo in
                         
                         ItemView(currentItem: $todo)
@@ -58,7 +68,7 @@ struct LandingView: View {
                     
                 }
                 
-              
+                
                 
             }
             .navigationTitle("To do")
@@ -67,7 +77,7 @@ struct LandingView: View {
                 NewItemView(showSheet: $presentingNewItemSheet)
                     .presentationDetents([.medium, .fraction(0.15)])
             }
-           
+            
             // Add a tool bar to the top of the interface
             // NOTE: For a toolbar to appear, it must be
             //       inside a NavigationView or NavigationStack.
