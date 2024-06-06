@@ -44,6 +44,8 @@ class TodoListViewModel {
             
             self.todos = results
             
+            fetchingTodos = false
+            
         } catch {
             debugPrint(error)
         }
